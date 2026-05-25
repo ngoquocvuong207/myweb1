@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet & Web — Tóm tắt Semantic HTML</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+    :root {
+      --ink: #1a1916;
+      --ink2: #4a4a44;
+      --ink3: #9a9a90;
+      --paper: #f5f2eb;
+      --paper2: #eceae0;
+      --paper3: #e0ddd2;
+      --accent: #c84b2f;
+      --accent2: #2563c8;
+      --accent3: #1a8c5a;
+      --line: #d8d5c8;
+      --white: #ffffff;
+      --radius: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0 2rem;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid #ffffff18;
+    }
+    .header-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    header h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 6vw, 62px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      color: var(--paper);
+    }
+    header h1 em {
+      font-style: italic;
+      color: #f5c97a;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: #9a9a90;
+      margin-top: 0.75rem;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+    .header-badge {
+      background: #ffffff12;
+      border: 1px solid #ffffff20;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      min-width: 140px;
+    }
+    .badge-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      color: var(--paper);
+      line-height: 1;
+    }
+    .badge-label { font-size: 12px; color: #7a7a70; margin-top: 4px; }
+
+    .header-tags {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #ffffff22;
+      color: #9a9a90;
+    }
+
+    /* ─── MAIN WRAPPER ─── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── SECTION BLOCK ─── */
+    section {
+      border-bottom: 1px solid var(--line);
+      padding: 3rem 0;
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.75rem;
+    }
+    .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      background: var(--paper2);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 3px 8px;
+    }
+    .section-tag-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--accent2);
+    }
+    section h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+    section p {
+      font-size: 16px;
+      color: var(--ink2);
+      line-height: 1.75;
+      max-width: 640px;
+      margin-bottom: 1rem;
+    }
+    section p:last-of-type { margin-bottom: 0; }
+
+    /* TWO-COL LAYOUT */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card p { font-size: 14px; color: var(--ink2); line-height: 1.65; margin-bottom: 0; }
+
+    /* HIGHLIGHT BOX */
+    .highlight {
+      background: var(--paper2);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.25rem;
+      font-size: 14px;
+      color: var(--ink2);
+      margin: 1.25rem 0;
+      line-height: 1.7;
+    }
+    .highlight strong { color: var(--ink); font-weight: 600; }
+
+    /* TABLE */
+    .table-wrap {
+      margin-top: 1.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead { background: var(--ink); }
+    thead th {
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--paper);
+    }
+    tbody tr { border-bottom: 1px solid var(--line); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--paper2); }
+    tbody td {
+      padding: 11px 16px;
+      vertical-align: top;
+    }
+    .td-mono {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--accent2);
+    }
+    .td-label {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .lbl-red { background: #fde8e4; color: var(--accent); }
+    .lbl-blue { background: #e4edfb; color: var(--accent2); }
+    .lbl-green { background: #e4f5ee; color: var(--accent3); }
+
+    /* TIMELINE */
+    .timeline {
+      margin-top: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 80px 1px 1fr;
+      gap: 0 1.5rem;
+      position: relative;
+    }
+    .tl-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      padding-top: 4px;
+      text-align: right;
+    }
+    .tl-line-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tl-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--ink);
+      border: 2px solid var(--paper);
+      outline: 2px solid var(--line);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .tl-vert {
+      width: 1px;
+      background: var(--line);
+      flex: 1;
+      min-height: 20px;
+    }
+    .tl-content {
+      padding: 0 0 2rem;
+    }
+    .tl-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .tl-desc { font-size: 14px; color: var(--ink2); margin-top: 3px; line-height: 1.6; }
+
+    /* QUIZ */
+    .quiz-area {
+      margin-top: 1.75rem;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .quiz-header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1rem 1.5rem;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .quiz-score {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: #f5c97a;
+    }
+    .quiz-body { padding: 1.5rem; }
+    .quiz-q {
+      display: none;
+    }
+    .quiz-q.active { display: block; }
+    .q-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .q-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      margin-bottom: 0.5rem;
+    }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .opt {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .opt:hover { border-color: var(--ink); background: var(--paper2); }
+    .opt.correct { background: #e4f5ee; border-color: var(--accent3); color: var(--accent3); }
+    .opt.wrong { background: #fde8e4; border-color: var(--accent); color: var(--accent); }
+    .q-feedback {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: var(--ink2);
+      display: none;
+      line-height: 1.6;
+    }
+    .quiz-nav {
+      margin-top: 1.25rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-next {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 8px;
+      padding: 9px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      display: none;
+    }
+    .btn-next:hover { opacity: 0.85; }
+    .quiz-done {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .quiz-done .score-big {
+      font-family: 'Instrument Serif', serif;
+      font-size: 56px;
+      color: var(--ink);
+    }
+    .quiz-done p { font-size: 15px; color: var(--ink2); margin-top: 0.5rem; }
+    .btn-restart {
+      margin-top: 1.25rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      border-bottom: 1px solid #ffffff12;
+    }
+    .footer-brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--paper);
+      margin-bottom: 6px;
+    }
+    .footer-desc { font-size: 14px; color: #7a7a70; line-height: 1.6; }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: right;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: #7a7a70;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--paper); }
+    .footer-bottom {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      font-size: 12px;
+      color: #555550;
+      font-family: 'IBM Plex Mono', monospace;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 640px) {
+      .header-inner { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-links { text-align: left; }
+      .footer-bottom { flex-direction: column; gap: 4px; }
+      main { padding: 0 1rem; }
+      header { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-kicker">Semantic HTML · Tóm tắt kiến thức</div>
+      <h1>Internet,<br><em>Web & Website</em></h1>
+      <p class="header-sub">Tổng quan về 4 khái niệm nền tảng bạn cần nắm vững trước khi bắt đầu học lập trình web.</p>
+    </div>
+    <div class="header-badge">
+      <div class="badge-num">4</div>
+      <div class="badge-label">khái niệm<br>cốt lõi</div>
+    </div>
+  </div>
+  <div class="header-tags">
+    <span class="tag">&lt;header&gt;</span>
+    <span class="tag">&lt;main&gt;</span>
+    <span class="tag">&lt;section&gt;</span>
+    <span class="tag">&lt;footer&gt;</span>
+    <span class="tag">&lt;article&gt;</span>
+    <span class="tag">&lt;nav&gt;</span>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- SECTION 1: Internet -->
+  <section id="internet">
+    <div class="section-meta">
+      <span class="section-num">01</span>
+      <span class="section-tag-name">&lt;section id="internet"&gt;</span>
+    </div>
+    <h2>Internet là gì?</h2>
+    <p>Internet là mạng lưới toàn cầu kết nối hàng tỷ thiết bị với nhau thông qua dây cáp, sóng vô tuyến và vệ tinh. Đây là <strong>cơ sở hạ tầng vật lý</strong> — giống như hệ thống đường xá, nhưng dành cho dữ liệu.</p>
+    <p>Internet không phải là Web. Internet là nền tảng, còn Web chỉ là một trong rất nhiều dịch vụ chạy trên nó.</p>
+
+    <div class="highlight">
+      <strong>Ví dụ dễ hiểu:</strong> Internet giống như hệ thống đường cao tốc quốc gia. Email, Web, streaming nhạc, video call — tất cả đều "chạy xe" trên cùng một hệ thống đường đó.
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>📡 Dịch vụ chạy trên Internet</h3>
+        <p>World Wide Web (HTTP), Email (SMTP), truyền tệp (FTP), gọi thoại (VoIP), streaming (RTSP)...</p>
+      </div>
+      <div class="card">
+        <h3>🗓️ Ra đời</h3>
+        <p>Tiền thân là ARPANET (1969) của Bộ Quốc phòng Mỹ. Mở rộng thương mại vào đầu những năm 1990.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Web -->
+  <section id="web">
+    <div class="section-meta">
+      <span class="section-num">02</span>
+      <span class="section-tag-name">&lt;section id="web"&gt;</span>
+    </div>
+    <h2>World Wide Web</h2>
+    <p>Web (hay WWW) là hệ thống các tài liệu siêu văn bản được liên kết với nhau và truy cập qua Internet bằng giao thức HTTP/HTTPS. Web được phát minh bởi Tim Berners-Lee năm 1989.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1989</div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Đề xuất ban đầu</div>
+          <div class="tl-desc">Tim Berners-Lee đề xuất hệ thống quản lý thông tin tại CERN.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1991</div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Website đầu tiên ra đời</div>
+          <div class="tl-desc">info.cern.ch — trang web đầu tiên trên thế giới được công bố.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1993</div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Web trở thành miền công cộng</div>
+          <div class="tl-desc">CERN tuyên bố Web miễn phí cho tất cả mọi người. Trình duyệt Mosaic ra đời.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Nay</div>
+        <div class="tl-line-col"><div class="tl-dot" style="background:var(--accent)"></div></div>
+        <div class="tl-content" style="padding-bottom:0">
+          <div class="tl-title">Hơn 1,9 tỷ website</div>
+          <div class="tl-desc">Web trở thành nền tảng thông tin, thương mại và giao tiếp toàn cầu.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Website vs Trang web -->
+  <section id="website">
+    <div class="section-meta">
+      <span class="section-num">03</span>
+      <span class="section-tag-name">&lt;section id="website"&gt;</span>
+    </div>
+    <h2>Website & Trang web</h2>
+    <p>Hai khái niệm này thường bị dùng lẫn lộn. Sự khác biệt rất đơn giản: <strong>website là tập hợp</strong>, trang web là đơn vị nhỏ nhất bên trong tập hợp đó.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th>Website</th>
+            <th>Trang web (Web page)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-mono">Định nghĩa</td>
+            <td>Tập hợp các trang web liên kết dưới 1 tên miền</td>
+            <td>Một tài liệu HTML đơn lẻ có URL riêng</td>
+          </tr>
+          <tr>
+            <td class="td-mono">Ví dụ</td>
+            <td>wikipedia.org</td>
+            <td>wikipedia.org/wiki/HTML</td>
+          </tr>
+          <tr>
+            <td class="td-mono">Số lượng</td>
+            <td>Có thể chứa hàng nghìn trang</td>
+            <td>Chỉ là 1 tài liệu</td>
+          </tr>
+          <tr>
+            <td class="td-mono">Loại</td>
+            <td><span class="td-label lbl-blue">Hệ thống</span></td>
+            <td><span class="td-label lbl-green">Tài liệu</span></td>
+          </tr>
+          <tr>
+            <td class="td-mono">Ví von</td>
+            <td>Cả cuốn sách</td>
+            <td>Một trang trong cuốn sách</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Quiz -->
+  <section id="quiz">
+    <div class="section-meta">
+      <span class="section-num">04</span>
+      <span class="section-tag-name">&lt;section id="quiz"&gt;</span>
+    </div>
+    <h2>Kiểm tra nhanh</h2>
+    <p>Trả lời 4 câu hỏi để xem bạn đã nắm chắc các khái niệm trên chưa.</p>
+
+    <div class="quiz-area">
+      <div class="quiz-header">
+        <span>Câu hỏi ôn tập</span>
+        <span class="quiz-score" id="scoreDisplay">0 / 4</span>
+      </div>
+      <div class="quiz-body">
+
+        <div class="quiz-q active" data-answer="1">
+          <div class="q-num">Câu 1 / 4</div>
+          <div class="q-text">Internet và Web có phải là cùng một thứ không?</div>
+          <div class="options">
+            <button class="opt" onclick="answer(this,0)">Có, chúng là một.</button>
+            <button class="opt" onclick="answer(this,1)">Không — Internet là hạ tầng, Web là dịch vụ chạy trên đó.</button>
+            <button class="opt" onclick="answer(this,0)">Không — Web ra đời trước Internet.</button>
+          </div>
+          <div class="q-feedback" id="fb0">✅ Đúng! Internet là mạng vật lý toàn cầu, còn Web (WWW) chỉ là một trong nhiều dịch vụ chạy trên Internet.</div>
+          <div class="quiz-nav"><button class="btn-next" onclick="nextQ(1)">Câu tiếp →</button></div>
+        </div>
+
+        <div class="quiz-q" data-answer="2">
+          <div class="q-num">Câu 2 / 4</div>
+          <div class="q-text">Ai là người phát minh ra World Wide Web?</div>
+          <div class="options">
+            <button class="opt" onclick="answer(this,0)">Bill Gates</button>
+            <button class="opt" onclick="answer(this,1)">Steve Jobs</button>
+            <button class="opt" onclick="answer(this,2)">Tim Berners-Lee</button>
+          </div>
+          <div class="q-feedback" id="fb1">✅ Đúng! Tim Berners-Lee phát minh ra Web năm 1989 khi đang làm việc tại CERN, Thụy Sĩ.</div>
+          <div class="quiz-nav"><button class="btn-next" onclick="nextQ(2)">Câu tiếp →</button></div>
+        </div>
+
+        <div class="quiz-q" data-answer="0">
+          <div class="q-num">Câu 3 / 4</div>
+          <div class="q-text">"vnexpress.net" là ví dụ của cái gì?</div>
+          <div class="options">
+            <button class="opt" onclick="answer(this,0)">Website</button>
+            <button class="opt" onclick="answer(this,1)">Trang web (Web page)</button>
+            <button class="opt" onclick="answer(this,2)">Giao thức mạng</button>
+          </div>
+          <div class="q-feedback" id="fb2">✅ Đúng! vnexpress.net là một website — tập hợp hàng nghìn trang web tin tức dưới cùng một tên miền.</div>
+          <div class="quiz-nav"><button class="btn-next" onclick="nextQ(3)">Câu tiếp →</button></div>
+        </div>
+
+        <div class="quiz-q" data-answer="1">
+          <div class="q-num">Câu 4 / 4</div>
+          <div class="q-text">Giao thức nào được dùng để truyền trang web từ máy chủ đến trình duyệt?</div>
+          <div class="options">
+            <button class="opt" onclick="answer(this,0)">FTP</button>
+            <button class="opt" onclick="answer(this,1)">HTTP / HTTPS</button>
+            <button class="opt" onclick="answer(this,2)">SMTP</button>
+          </div>
+          <div class="q-feedback" id="fb3">✅ Đúng! HTTP (HyperText Transfer Protocol) là giao thức nền tảng của Web. HTTPS là phiên bản bảo mật.</div>
+          <div class="quiz-nav"><button class="btn-next" onclick="finishQ()">Xem kết quả →</button></div>
+        </div>
+
+        <div class="quiz-done" id="quizDone">
+          <div class="score-big" id="finalScore">0/4</div>
+          <p id="finalMsg">Làm tốt lắm! Ôn thêm để ghi nhớ vững hơn nhé.</p>
+          <br>
+          <button class="btn-restart" onclick="restartQ()">Làm lại</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Internet & Web</div>
+      <div class="footer-desc">Tóm tắt kiến thức nền tảng · Semantic HTML · Editor 5</div>
+    </div>
+    <div class="footer-links">
+      <a href="#internet">Internet</a>
+      <a href="#web">World Wide Web</a>
+      <a href="#website">Website & Trang web</a>
+      <a href="#quiz">Kiểm tra nhanh</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&lt;footer&gt; semantic HTML</span>
+    <span>Học lập trình web · 2025</span>
+  </div>
+</footer>
+
+<script>
+  var score = 0;
+  var currentQ = 0;
+  var answered = [false, false, false, false];
+
+  function answer(btn, chosen) {
+    var q = btn.closest('.quiz-q');
+    var correct = parseInt(q.dataset.answer);
+    var opts = q.querySelectorAll('.opt');
+    if (answered[currentQ]) return;
+    answered[currentQ] = true;
+
+    opts.forEach(function(o) { o.style.pointerEvents = 'none'; });
+    if (chosen === correct) {
+      btn.classList.add('correct');
+      score++;
+      document.getElementById('scoreDisplay').textContent = score + ' / 4';
+    } else {
+      btn.classList.add('wrong');
+      opts[correct].classList.add('correct');
+    }
+    var fb = q.querySelector('.q-feedback');
+    fb.style.display = 'block';
+    q.querySelector('.btn-next').style.display = 'inline-block';
+  }
+
+  function nextQ(idx) {
+    document.querySelectorAll('.quiz-q')[currentQ].classList.remove('active');
+    currentQ = idx;
+    document.querySelectorAll('.quiz-q')[currentQ].classList.add('active');
+  }
+
+  function finishQ() {
+    document.querySelectorAll('.quiz-q')[currentQ].classList.remove('active');
+    var done = document.getElementById('quizDone');
+    done.style.display = 'block';
+    document.getElementById('finalScore').textContent = score + '/4';
+    var msgs = ['Cần ôn thêm một chút nữa nhé! 💪', 'Khá đấy! Đọc lại phần còn sai nhé.', 'Tốt lắm! Gần hoàn hảo rồi! 🎉', 'Xuất sắc! Bạn đã nắm vững kiến thức! 🏆'];
+    document.getElementById('finalMsg').textContent = msgs[Math.min(score, 4) - 1] || msgs[0];
+  }
+
+  function restartQ() {
+    score = 0; currentQ = 0; answered = [false,false,false,false];
+    document.getElementById('scoreDisplay').textContent = '0 / 4';
+    document.getElementById('quizDone').style.display = 'none';
+    document.querySelectorAll('.quiz-q').forEach(function(q, i) {
+      q.classList.remove('active');
+      q.querySelectorAll('.opt').forEach(function(o) {
+        o.classList.remove('correct','wrong');
+        o.style.pointerEvents = '';
+      });
+      q.querySelector('.q-feedback').style.display = 'none';
+      q.querySelector('.btn-next').style.display = 'none';
+    });
+    document.querySelectorAll('.quiz-q')[0].classList.add('active');
+  }
+</script>
+</body>
+</html>
